@@ -1,0 +1,161 @@
+/*This is the following DDL script where i've created the database and tables as well as inserted information about the customers, products and orders*/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Creating the database
+
+CREATE DATABASE OnlineRetailDB
+
+--Creating schemas
+
+CREATE SCHEMA bronze
+
+--Creating table
+
+--Creating Table bronze.customers 
+
+
+CREATE TABLE bronze.customers
+(
+customers_id INT PRIMARY KEY,
+customer_name NVARCHAR(50),
+gender NVARCHAR(50),
+city NVARCHAR(50),
+age INT
+);
+
+--Creating Table bronze.products
+
+CREATE TABLE bronze.products
+(
+product_id INT PRIMARY KEY,
+product_name NVARCHAR(50),
+category NVARCHAR(50),
+price INT
+);
+
+--Creating Table bronze.orders
+
+CREATE TABLE bronze.orders
+(
+order_id INT PRIMARY KEY,
+customers_id INT,
+order_date DATE
+
+FOREIGN KEY (customers_id)
+ REFERENCES bronze.customers(customers_id) --Created a Foreign Key customers_id FROM TABLE bronze.customers
+);
+
+--Creating Table bronze.orders_details 
+
+CREATE TABLE bronze.orders_details
+(
+orders_details_id INT PRIMARY KEY,
+order_id INT,
+product_id INT,
+quantity INT 
+
+FOREIGN KEY (order_id) REFERENCES bronze.orders(order_id),
+FOREIGN KEY (product_id) REFERENCES bronze.products(product_id)  /*Creating a Foreign Key order_id and product_id FROM
+                                                                  TABLE bronze.orders and bronze,products*/
+)
+
+--Inserting Data into bronze.customers
+
+INSERT INTO bronze.customers (customers_id ,customer_name ,gender ,city ,age)
+VALUES 
+(1, 'Aarav Sharma', 'Male', 'Mumbai', 25),
+(2, 'Ananya Patel', 'Female', 'Ahemdabad', 22),
+(3, 'Rohan Verma', 'Male', 'Delhi', 30),
+(4, 'Priya Singh', 'Female', 'Jaipur', 27),
+(5, 'Karan Mehta', 'Male', 'Pune', 29),
+(6, 'Sneha Iyer', 'Female', 'Chennai', 24),
+(7, 'Rahul Gupta', 'Male', 'Lucknow', 31),
+(8, 'Neha Joshi', 'Female', 'Indore', 26),
+(9, 'Vikram Nair', 'Male', 'Kochi', 35),
+(10, 'Pooja Desai', 'Female', 'Surat', 23),
+(11, 'Arjun Kapoor', 'Male', 'Chandigarh', 28),
+(12, 'Meera Reddy', 'Female', 'Hyderabad', 32),
+(13, 'Aditya Rao', 'Male', 'Bengaluru', 24),
+(14, 'Kavya Menon', 'Female', 'Thiruvananthapuram', 29),
+(15, 'Suresh Kumar', 'Male', 'Patna', 34),
+(16, 'Divya Shah', 'Female', 'Vadodara', 21),
+(17, 'Mohit Bansal', 'Male', 'Noida', 27),
+(18, 'Aisha Khan', 'Female', 'Bhopal', 25),
+(19, 'Nitin Yadav', 'Male', 'Nagpur', 33),
+(20, 'Riya Malhotra', 'Female', 'Kolkata', 26);
+
+--Inserting Data into bronze.products 
+
+INSERT INTO bronze.products (product_id, product_name, category, price)
+VALUES
+(101, 'Laptop', 'Electronics', 65000),
+(102, 'Smartphone', 'Electronics', 25000),
+(103, 'Headphones', 'Electronics', 3000),
+(104, 'Keyboard', 'Electronics', 1500),
+(105, 'Mouse', 'Electronics', 900),
+(106, 'Office Chair', 'Furniture', 7000),
+(107, 'Study Table', 'Furniture', 9500),
+(108, 'Water Bottle', 'Kitchen', 500),
+(109, 'Backpack', 'Bags', 1800),
+(110, 'Shoes', 'Footwear', 3500),
+(111, 'T-Shirt', 'Clothing', 800),
+(112, 'Jeans', 'Clothing', 1800),
+(113, 'Watch', 'Accessories', 4500),
+(114, 'Power Bank', 'Electronics', 1500),
+(115, 'Coffee Mug', 'Kitchen', 350),
+(116, 'Notebook', 'Stationery', 150),
+(117, 'Pen Set', 'Stationery', 300),
+(118, 'Tablet', 'Electronics', 28000),
+(119, 'Bluetooth Speaker', 'Electronics', 2200),
+(120, 'Monitor', 'Electronics', 12000);
+
+--Inserting Data into bronze.orders 
+
+INSERT INTO bronze.orders (order_id, customers_id, order_date)
+VALUES
+(1001, 1, '2026-01-05'),
+(1002, 2, '2026-01-07'),
+(1003, 3, '2026-01-10'),
+(1004, 4, '2026-01-12'),
+(1005, 5, '2026-01-15'),
+(1006, 6, '2026-01-18'),
+(1007, 7, '2026-01-20'),
+(1008, 8, '2026-01-22'),
+(1009, 9, '2026-01-24'),
+(1010, 10, '2026-01-26'),
+(1011, 11, '2026-02-01'),
+(1012, 12, '2026-02-03'),
+(1013, 13, '2026-02-05'),
+(1014, 14, '2026-02-08'),
+(1015, 15, '2026-02-10'),
+(1016, 16, '2026-02-12'),
+(1017, 17, '2026-02-15'),
+(1018, 18, '2026-02-18'),
+(1019, 19, '2026-02-20'),
+(1020, 20, '2026-02-22');
+
+--Inserting Data into bronze.orders_details
+
+INSERT INTO bronze.orders_details (orders_details_id, order_id, product_id, quantity)
+VALUES
+(1, 1001, 101, 1),
+(2, 1002, 102, 2),
+(3, 1003, 103, 1),
+(4, 1004, 104, 3),
+(5, 1005, 105, 2),
+(6, 1006, 106, 1),
+(7, 1007, 107, 1),
+(8, 1008, 108, 5),
+(9, 1009, 109, 2),
+(10, 1010, 110, 1),
+(11, 1011, 111, 4),
+(12, 1012, 112, 2),
+(13, 1013, 113, 1),
+(14, 1014, 114, 2),
+(15, 1015, 115, 3),
+(16, 1016, 116, 10),
+(17, 1017, 117, 5),
+(18, 1018, 118, 1),
+(19, 1019, 119, 2),
+(20, 1020, 120, 1);
