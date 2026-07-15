@@ -1,0 +1,58 @@
+--Basic SQL Queries
+
+--bronze.customers 
+
+SELECT 
+* 
+FROM bronze.customers 
+ORDER BY age DESC
+
+--bronze.products 
+
+SELECT 
+* 
+FROM bronze.products 
+ORDER BY price DESC
+
+--bronze.orders 
+
+SELECT
+* 
+FROM bronze.orders 
+ORDER BY order_date DESC
+
+--bronze.orders_details
+
+SELECT 
+* 
+FROM bronze.orders_details
+ORDER BY quantity DESC
+
+--Find customers between the age of 20 and 30
+
+SELECT 
+* 
+FROM bronze.customers 
+WHERE age BETWEEN 20 AND 30 
+
+--Find Top 10 highest pricing products 
+
+SELECT TOP 10 
+* 
+FROM bronze.products  
+ORDER BY price DESC
+
+--List products from highest to lowest according to their quantity.
+
+SELECT 
+*
+FROM bronze.orders_details
+ORDER BY quantity DESC
+
+--List orders by their date from current to older.
+
+SELECT 
+*
+FROM bronze.orders
+ORDER BY order_date DESC
+
