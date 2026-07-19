@@ -1,0 +1,59 @@
+--Advanced SQL 
+
+--Segment the products according to their price as 100-5000 low, 5000-40000 medium and above 50000 high.
+
+SELECT 
+    product_id,
+    product_name,
+    category,
+    price,
+    CASE WHEN price BETWEEN 100 AND 5000 THEN 'Low'
+         WHEN price BETWEEN 5001 AND 40000 THEN 'Medium'
+         ELSE 'High'
+    END AS price_segmentation
+FROM bronze.products
+
+--Rank the customers based on their total purchase using CTE.
+
+WITH cust_info AS (
+    SELECT 
+        c.customers_id,
+        c.customer_name,
+        p.price,
+        od.quantity,
+        c.gender,
+        c.city,
+        c.age
+    FROM bronze.customers AS c
+    LEFT JOIN bronze.orders AS o
+    ON c.customers_id = o.customers_id 
+    LEFT JOIN bronze.orders_details AS od
+    ON o.order_id = od.order_id
+    LEFT JOIN bronze.products AS p
+    ON od.product_id = p.product_id
+),
+
+cust_info2 AS (
+SELECT 
+     customers_id,
+     customer_name,
+     price,
+     quantity,
+     gender,
+     city,
+     age,
+     price * quantity AS total_purchase
+FROM cust_info 
+)
+
+SELECT 
+     customers_id,
+     customer_name,
+     price,
+     quantity,
+     gender,
+     city,
+     age,
+     total_purchase,
+     RANK() OVER (ORDER BY total_purchase DESC) AS customer_rank
+FROM cust_info2
