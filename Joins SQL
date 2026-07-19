@@ -1,0 +1,45 @@
+--Joins 
+
+--Find the customers with higest quantity using LEFT JOIN.
+
+SELECT 
+	c.customers_id,
+	od.order_id,
+	c.customer_name,
+	od.quantity,
+	c.gender,
+	c.city,
+	c.age
+FROM bronze.customers AS c
+LEFT JOIN bronze.orders AS o
+ON o.customers_id = c.customers_id
+LEFT JOIN bronze.orders_details AS od
+ON od.order_id = o.order_id
+WHERE quantity IS NOT NULL
+
+--Find customers who have placed an order using INNER JOIN.
+
+SELECT 
+	c.customers_id,
+	o.order_id,
+	c.customer_name,
+	c.gender,
+	c.city,
+	c.age 
+FROM bronze.customers AS c
+INNER JOIN bronze.orders AS o 
+ON c.customers_id = o.customers_id
+
+--Find the orders with there respective id,name,category and price using RIGHT JOIN.
+
+SELECT 
+	o.order_id,
+	p.product_id,
+	p.product_name,
+	p.category,
+	p.price
+FROM bronze.orders AS o
+RIGHT JOIN bronze.orders_details AS od
+ON od.order_id = o.order_id 
+RIGHT JOIN bronze.products AS p
+ON p.product_id = od.product_id
