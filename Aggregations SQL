@@ -1,0 +1,51 @@
+--Aggregations
+
+--Count all the customers.
+
+SELECT 
+	COUNT(customers_id) AS total_customers
+FROM bronze.customers
+
+--Total quantity sold.
+
+SELECT 
+	SUM(quantity) AS total_quantity_sold
+FROM bronze.orders_details
+
+--Find the average price of all products.
+
+SELECT
+	COUNT(product_id) AS total_products,
+	SUM(price) AS total_price,
+	SUM(price) / COUNT(product_id) AS avg_price 
+FROM bronze.products
+
+--Find the most expensive and the cheapest product.
+
+SELECT 
+	MIN(price) AS cheapest_product,
+	MAX(price) AS expensive_product
+FROM bronze.products
+
+--Find the total sales
+
+SELECT 
+	SUM(p.price) * SUM(od.quantity) AS total_sales
+	FROM bronze.products AS p
+	LEFT JOIN bronze.orders_details AS od
+ON od.product_id = p.product_id
+
+--Find the total number of customers from Mumbai city
+
+SELECT 
+customers_id,
+customer_name,
+gender,
+city,
+age
+FROM bronze.customers
+WHERE city = 'Mumbai'
+
+SELECT
+*
+FROM bronze.customers
